@@ -11,7 +11,7 @@ import {autoRehydrate} from 'redux-persist-immutable';
 import uuid from 'uuid/v4';
 import {reducer as todosReducer} from './todosRedux';
 import Todo from './todo';
-import createMigration from './redux-persist-version';
+import createMigration from './redux-persist-version-immutable';
 import logger from 'redux-logger';
 import {fromJS} from 'immutable'
 
