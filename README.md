@@ -4,6 +4,13 @@ Migrate redux state between versions with redux-persist-immutable.
 
 This is forked from https://github.com/xiongxiong/redux-persist-version to add in support for redux-persist-immutable
 
+#### Install & Test
+
+```
+npm install
+npm test
+```
+
 #### Usage
 ```js
 import {compose, applyMiddleware, createStore} from 'redux';
@@ -23,19 +30,13 @@ export const initialState = fromJS({
 });
 
 const manifest = {
-  migrate: (state, version) => updateState(state, version),
-  migrations: [
-    {
-      version: '0.0.1',
-    },
-    {
-      version: '0.0.2',
-    },
-    {
-      version: '0.1.0',
-    },
-  ],
-}
+    migrate: (state, version) => updateState(state, version),
+    migrations: [
+      { version: "0.0.1" },
+      { version: "0.0.2" },
+      { version: "0.1.0" },
+    ]
+};
 
 const migration = createMigration(manifest, "app");
 const enhancer = compose(applyMiddleware(logger), migration, autoRehydrate({log: true}));
@@ -43,16 +44,23 @@ const enhancer = compose(applyMiddleware(logger), migration, autoRehydrate({log:
 export const store = createStore(todosReducer, undefined, enhancer);
 
 function updateState(state, version) {
+    const newState = Object.assign({}, state)
+
     switch (version) {
-        default:
-            return state;
+      case '0.0.1':
+        newState.todos = state.todos.map((i) => Object.assign({}, i, {complete: false}))
+        return newState
+      case '0.0.2':
+        newState.todos = state.todos.map((i) => Object.assign({}, i, {lastUpdate: moment()}))
+        return newState
+      case '0.1.0':
+        newState.todos = state.todos.map((i) => Object.assign({}, i, {priority: 'high'}))
+        return newState
+      default:
+          return state;
     }
 }
 
-function updateTodo(todo, version) {
-    switch (version) {
-        default:
-            return todo;
-    }
-}
 ```
+#### Notes
+Currently works only with redux-persist@4.x
