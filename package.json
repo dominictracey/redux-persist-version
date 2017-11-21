@@ -1,14 +1,14 @@
 {
-    "name": "redux-persist-version",
+    "name": "redux-persist-version-immutable",
     "version": "0.1.1",
-    "description": "Migrate redux state between versions with redux-persist.",
+    "description": "Migrate redux state between versions with redux-persist-immutable.",
     "main": "index.js",
     "scripts": {
         "test": "jest"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/xiongxiong/redux-persist-version.git"
+        "url": "git+https://github.com/dominictracey/redux-persist-version.git"
     },
     "keywords": [
         "redux",
@@ -17,7 +17,8 @@
         "migration",
         "migrate",
         "version",
-        "state"
+        "state",
+        "immutable"
     ],
     "jest": {
         "setupFiles": [
@@ -30,9 +31,9 @@
     "author": "xiongxiong <ximengwuheng@163.com>",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/xiongxiong/redux-persist-version/issues"
+        "url": "https://github.com/dominictracey/redux-persist-version-immutable/issues"
     },
-    "homepage": "https://github.com/xiongxiong/redux-persist-version#readme",
+    "homepage": "https://github.com/dominictracey/redux-persist-version-immutable#readme",
     "devDependencies": {
         "babel": "^6.23.0",
         "babel-jest": "^21.2.0",
@@ -45,6 +46,7 @@
         "redux-logger": "^3.0.6"
     },
     "dependencies": {
+        "immutable": "^3.8.2",
         "redux-persist": "^4.10.2"
     }
 }

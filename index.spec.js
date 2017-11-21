@@ -1,5 +1,5 @@
 import {initialState, migration, store} from './test/state';
-//import {fromJS} from 'immutable'
+import {fromJS} from 'immutable'
 import {REHYDRATE} from 'redux-persist/constants';
 
 
@@ -36,9 +36,9 @@ it('calls the function', () => {
   expect(fn).toHaveBeenCalled()
 });
 
-const savedState0 = {
+const savedState0 = fromJS ({
     todos: [{title: 'implement priority for next version of todo app'}]
-}
+})
 it('updates unversioned to 0.1.0', () => {
   const { store, invoke } = create()
   const action = {type:REHYDRATE, payload: savedState0}
@@ -50,18 +50,17 @@ it('updates unversioned to 0.1.0', () => {
   expect(store.dispatch).toHaveBeenCalledWith(action)
   expect(store.getState).toHaveBeenCalled()
 
-  // console.log('newState ' + JSON.stringify(newState.payload))
-  expect(newState.payload.app.version).toEqual('0.1.0')
-  expect(newState.payload.todos[0].priority == 'high')
-  expect(newState.payload.todos[0].complete == false)
+  expect(newState.payload.getIn(['app','version'])).toEqual('0.1.0')
+  expect(newState.payload.getIn(['todos',0,'priority'])).toEqual('high')
+  expect(newState.payload.getIn(['todos',0,'complete'])).toEqual(false)
 });
 
-const savedState1 = {
+const savedState1 = fromJS({
     app: {
       version: "0.0.1",
     },
     todos: [{title: 'implement priority for next version of todo app', complete: true}]
-}
+})
 it('updates 0.0.1 to 0.1.0', () => {
   const { store, invoke } = create()
   const action = {type:REHYDRATE, payload: savedState1}
@@ -73,8 +72,7 @@ it('updates 0.0.1 to 0.1.0', () => {
   expect(store.dispatch).toHaveBeenCalledWith(action)
   expect(store.getState).toHaveBeenCalled()
 
-  // console.log('newState ' + JSON.stringify(newState.payload))
-  expect(newState.payload.app.version).toEqual('0.1.0')
-  expect(newState.payload.todos[0].priority == 'high')
-  expect(newState.payload.todos[0].complete == true)
+  expect(newState.payload.getIn(['app','version'])).toEqual('0.1.0')
+  expect(newState.payload.getIn(['todos',0,'priority'])).toEqual('high')
+  expect(newState.payload.getIn(['todos',0,'complete'])).toEqual(true)
 });
