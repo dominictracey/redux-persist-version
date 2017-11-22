@@ -1,6 +1,6 @@
 {
     "name": "redux-persist-version-immutable",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "description": "Migrate redux state between versions with redux-persist-immutable.",
     "main": "index.js",
     "scripts": {
