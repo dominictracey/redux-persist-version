@@ -1,6 +1,6 @@
 ## Redux Persist Version
 
-Migrate redux state between versions with redux-persist-immutable.
+Migrate redux state with a top level immutable.js Map between versions with redux-persist-immutable.
 
 This is forked from https://github.com/xiongxiong/redux-persist-version to add in support for redux-persist-immutable
 
@@ -44,17 +44,17 @@ const enhancer = compose(applyMiddleware(logger), migration, autoRehydrate({log:
 export const store = createStore(todosReducer, undefined, enhancer);
 
 function updateState(state, version) {
-    const newState = Object.assign({}, state)
+    var newState
 
     switch (version) {
       case '0.0.1':
-        newState.todos = state.todos.map((i) => Object.assign({}, i, {complete: false}))
+        newState = state.set('todos', state.get('todos').map((i) => i.set('complete', false)))
         return newState
       case '0.0.2':
-        newState.todos = state.todos.map((i) => Object.assign({}, i, {lastUpdate: moment()}))
+        newState = state.set('todos',state.get('todos').map((i) => i.set('assigned', 'me')))
         return newState
       case '0.1.0':
-        newState.todos = state.todos.map((i) => Object.assign({}, i, {priority: 'high'}))
+        newState = state.set('todos',state.get('todos').map((i) => i.set('priority', 'high')))
         return newState
       default:
           return state;
