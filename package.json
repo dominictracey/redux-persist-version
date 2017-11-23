@@ -47,6 +47,6 @@
     },
     "dependencies": {
         "immutable": "^3.8.2",
-        "redux-persist": "^4.10.2"
+        "redux-persist": "^4.10.x"
     }
 }
